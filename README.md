@@ -44,7 +44,7 @@ El proyecto muestra una interfaz sencilla con tres rutas principales:
 
 ## Autor
 
-Desarrollado por Ruiz Llanterhuay Carlos Enrique – Proyecto Rick and Morty React.
+Desarrollado por Azañero Pillaca – Proyecto Rick and Morty React.
 
 ## Posdata
 Wubba Lubba Dub Dub! Rick and Morty es el mejor show de animación.

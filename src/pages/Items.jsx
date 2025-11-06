@@ -49,6 +49,8 @@ export default function Items() {
     c.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "60vh" }}>
