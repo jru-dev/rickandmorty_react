@@ -1,13 +1,13 @@
-# PokeDex React
+# Rick and Morty React
 
-Aplicación desarrollada en React que permite explorar y visualizar información de distintos Pokémon consumidos desde la API pública [PokeAPI](https://pokeapi.co/).
+Aplicación desarrollada en React que permite explorar y visualizar información de personajes del universo de Rick y Morty consumidos desde la API pública [Rick and Morty API](https://rickandmortyapi.com/).
 
 ## Descripción
 
 El proyecto muestra una interfaz sencilla con tres rutas principales:
 
-* **Inicio (Home):** Presenta el nombre del proyecto, una breve descripción y una vista previa de algunos Pokémon.
-* **Pokémon (Items):** Muestra un listado completo de Pokémon obtenidos desde la PokeAPI, con sus principales propiedades (nombre, tipo e imagen).
+* **Inicio (Home):** Presenta el nombre del proyecto, una breve descripción y una vista previa de algunos personajes de Rick y Morty.
+* **Personajes (Items):** Muestra un listado completo de personajes obtenidos desde la Rick and Morty API, con sus principales propiedades (nombre, imagen, estado, especie y género).
 * **Contacto:** Página informativa o de presentación.
 
 ## Tecnologías utilizadas
@@ -23,12 +23,12 @@ El proyecto muestra una interfaz sencilla con tres rutas principales:
 1. Clonar este repositorio:
 
    ```bash
-   git clone https://github.com/CarloZD/pokedex-react.git
+   git clone https://github.com/CarloZD/rickandmorty-react.git
    ```
 2. Entrar a la carpeta del proyecto:
 
    ```bash
-   cd pokedex-react
+   cd rickandmorty-react
    ```
 3. Instalar dependencias:
 
@@ -42,13 +42,9 @@ El proyecto muestra una interfaz sencilla con tres rutas principales:
    ```
 5. Abrir en el navegador la dirección que se muestre (por ejemplo, `http://localhost:5173/`).
 
-## Enlace del video
-
-https://youtu.be/Cr9sbOa7Xq8
-
 ## Autor
 
-Desarrollado por Ruiz Llanterhuay Carlos Enrique – Proyecto PokeDex React.
+Desarrollado por Ruiz Llanterhuay Carlos Enrique – Proyecto Rick and Morty React.
 
 ## Posdata
-Kanto region sobrevalorada, Sinnoh es mejor
+Wubba Lubba Dub Dub! Rick and Morty es el mejor show de animación.
