@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 
 function App() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#00b5cc" }}>
       <div className="container-fluid px-4">
-        <Link className="navbar-brand fw-bold" to="/">PokeDex</Link>
+        <Link className="navbar-brand fw-bold" to="/" style={{ fontSize: "1.5rem" }}>
+          Rick & Morty Wiki
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -19,7 +21,7 @@ function App() {
               <Link className="nav-link" to="/">Inicio</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/items">Pokémon</Link>
+              <Link className="nav-link" to="/items">Personajes</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/contact">Contacto</Link>

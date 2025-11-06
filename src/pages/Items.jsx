@@ -2,38 +2,42 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Items() {
-  const [pokemons, setPokemons] = useState([]);
+  const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(localStorage.getItem("favs") || "[]");
   });
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get("https://pokeapi.co/api/v2/pokemon?limit=151")
-      .then(async (res) => {
-        const results = res.data.results;
-        const detailed = await Promise.all(
-          results.map(async (p) => {
-            const data = await axios.get(p.url);
-            return {
-              name: data.data.name,
-              image: data.data.sprites.front_default,
-              height: data.data.height,
-              weight: data.data.weight,
-              id: data.data.id
-            };
-          })
-        );
-        setPokemons(detailed);
+    const fetchCharacters = async () => {
+      try {
+        const res = await axios.get(`https://rickandmortyapi.com/api/character?page=${page}`);
+        const results = res.data.results.map((c) => ({
+          id: c.id,
+          name: c.name,
+          image: c.image,
+          status: c.status,
+          species: c.species,
+          gender: c.gender,
+          origin: c.origin.name,
+        }));
+        setCharacters(results);
         setLoading(false);
-      });
-  }, []);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchCharacters();
+  }, [page]);
 
   const toggleFav = (name) => {
     let updated;
     if (favorites.includes(name)) {
-      updated = favorites.filter(f => f !== name);
+      updated = favorites.filter((f) => f !== name);
     } else {
       updated = [...favorites, name];
     }
@@ -41,14 +45,14 @@ export default function Items() {
     localStorage.setItem("favs", JSON.stringify(updated));
   };
 
-  const filteredPokemons = pokemons.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCharacters = characters.filter((c) =>
+    c.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "60vh" }}>
-        <div className="spinner-border text-danger" role="status" style={{ width: "3rem", height: "3rem" }}>
+        <div className="spinner-border text-success" role="status" style={{ width: "3rem", height: "3rem" }}>
           <span className="visually-hidden">Cargando...</span>
         </div>
       </div>
@@ -59,35 +63,36 @@ export default function Items() {
     <div className="container mt-4 mb-5">
       {/* Header con búsqueda */}
       <div className="text-center mb-4">
-        <h1 className="mb-3" style={{ color: "#dc3545" }}>
-          🔍 Lista de Pokémon
+        <h1 className="mb-3" style={{ color: "#198754" }}>
+          Lista de Personajes
         </h1>
         <div className="row justify-content-center">
           <div className="col-md-6">
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Buscar Pokémon..."
+              placeholder="Buscar personaje..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ borderColor: "#dc3545" }}
+              style={{ borderColor: "#198754" }}
             />
           </div>
         </div>
         <p className="text-muted mt-2">
-          Encontrados: {filteredPokemons.length} | Favoritos: {favorites.length}
+          Encontrados: {filteredCharacters.length} | Favoritos: {favorites.length}
         </p>
       </div>
 
-      {/* Grid de Pokémon */}
+      {/* Grid de personajes */}
       <div className="row g-4">
-        {filteredPokemons.map((poke) => {
-          const isFav = favorites.includes(poke.name);
+        {filteredCharacters.map((char) => {
+          const isFav = favorites.includes(char.name);
           return (
-            <div key={poke.name} className="col-12 col-sm-6 col-md-4 col-lg-3">
-              <div className="card shadow-sm h-100 border-0 position-relative"
+            <div key={char.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div
+                className="card shadow-sm h-100 border-0 position-relative"
                 style={{
-                  transition: "transform 0.2s, box-shadow 0.2s"
+                  transition: "transform 0.2s, box-shadow 0.2s",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-5px)";
@@ -98,41 +103,54 @@ export default function Items() {
                   e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.12)";
                 }}
               >
-                {/* Número de Pokédex */}
+                {/* ID del personaje */}
                 <div className="position-absolute top-0 start-0 m-2">
                   <span className="badge bg-secondary" style={{ fontSize: "0.75rem", fontWeight: "600" }}>
-                    #{String(poke.id).padStart(3, '0')}
+                    #{String(char.id).padStart(3, "0")}
                   </span>
                 </div>
 
                 <div className="text-center pt-4 mt-2">
-                  <img 
-                    src={poke.image} 
-                    className="img-fluid" 
-                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
-                    alt={poke.name}
+                  <img
+                    src={char.image}
+                    className="img-fluid rounded"
+                    style={{ width: "120px", height: "120px", objectFit: "cover" }}
+                    alt={char.name}
                   />
                 </div>
                 <div className="card-body text-center">
-                  <h5 className="card-title text-capitalize fw-bold mb-3">
-                    {poke.name}
-                  </h5>
+                  <h5 className="card-title fw-bold mb-3">{char.name}</h5>
                   <div className="mb-3">
-                    <small className="text-muted d-block">
-                      <strong>Altura:</strong> {poke.height}
+                    <small className="d-block">
+                      <strong>Estado:</strong>{" "}
+                      <span
+                        className="badge"
+                        style={{
+                          backgroundColor: getStatusColor(char.status),
+                          color: "white",
+                        }}
+                      >
+                        {char.status}
+                      </span>
                     </small>
                     <small className="text-muted d-block">
-                      <strong>Peso:</strong> {poke.weight}
+                      <strong>Especie:</strong> {char.species}
+                    </small>
+                    <small className="text-muted d-block">
+                      <strong>Género:</strong> {char.gender}
+                    </small>
+                    <small className="text-muted d-block">
+                      <strong>Origen:</strong> {char.origin}
                     </small>
                   </div>
                   <button
-                    onClick={() => toggleFav(poke.name)}
-                    className={`btn btn-sm w-100 ${isFav ? "btn-danger" : "btn-outline-danger"}`}
+                    onClick={() => toggleFav(char.name)}
+                    className={`btn btn-sm w-100 ${isFav ? "btn-success" : "btn-outline-success"}`}
                     style={{
-                      transition: "all 0.2s"
+                      transition: "all 0.2s",
                     }}
                   >
-                    {isFav ? " Favorito" : " Favorito"}
+                    {isFav ? "★ Favorito" : "☆ Favorito"}
                   </button>
                 </div>
               </div>
@@ -141,12 +159,22 @@ export default function Items() {
         })}
       </div>
 
-      {filteredPokemons.length === 0 && (
+      {filteredCharacters.length === 0 && (
         <div className="text-center mt-5">
-          <h3 className="text-muted">No se encontraron Pokémon</h3>
+          <h3 className="text-muted">No se encontraron personajes</h3>
           <p className="text-muted">Intenta con otro nombre</p>
         </div>
       )}
     </div>
   );
 }
+
+// Colores según el estado
+const getStatusColor = (status) => {
+  const colors = {
+    Alive: "#28a745",
+    Dead: "#dc3545",
+    unknown: "#6c757d",
+  };
+  return colors[status] || "#6c757d";
+};

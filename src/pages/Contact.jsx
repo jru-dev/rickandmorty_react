@@ -4,7 +4,7 @@ export default function Contact() {
       <h1 className="mb-4 text-danger"> Contacto</h1>
       <p className="lead">
         Si deseas más información sobre el proyecto o colaborar,  
-        escríbenos a <strong>carlos.ruiz.l@tecsup.edu.pe</strong>.
+        escríbenos a <strong>chanchirata</strong>.
       </p>
       <form className="mt-4">
         <div className="mb-3">

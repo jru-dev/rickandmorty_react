@@ -6,7 +6,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#dc3545" }}>
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
-          PokeDex
+          Rick&MortyDEX
         </Link>
         <button
           className="navbar-toggler"
@@ -28,7 +28,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/items">
-                Pokémon
+                Personajes
               </Link>
             </li>
             <li className="nav-item">
